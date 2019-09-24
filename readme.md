@@ -11,10 +11,14 @@
 ## Comandos
 <p>
 $ composer update 
+    
 $ composer install
+
 $ npm install
 
+
 $ php artisan make:auth 
+
 //Este es para crear la autenticacion. No es necesario hacerlo 
 
 $ php artisan migrate
@@ -27,6 +31,16 @@ $ npm run dev
 $ npm run watch
 
 $ php artisan cache:clear
+$ php artisan optimize
+
+$ php make:controller <nombre del controlador>Controller
+
+
+$ php artisan list
+
+$ php artisan make -help
+
+
 </p>
 
 
