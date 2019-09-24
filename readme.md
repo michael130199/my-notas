@@ -10,19 +10,23 @@
 
 ## Comandos
 <p>
-composer update 
-composer install
-npm install
+$ composer update 
+$ composer install
+$ npm install
 
-php artisan make:auth //Este es para crear la autenticacion. No es necesario hacerlo 
+$ php artisan make:auth 
+//Este es para crear la autenticacion. No es necesario hacerlo 
 
-php artisan migrate
-php artisan migrate:refresh //refrescar las tablas que ya estan creadas
+$ php artisan migrate
+$ php artisan migrate:refresh 
+//refrescar las tablas que ya estan creadas
 
 
 //compilar 
-npm run dev 
-npm run watch
+$ npm run dev 
+$ npm run watch
+
+$ php artisan cache:clear
 </p>
 
 
