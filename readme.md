@@ -9,7 +9,7 @@
 
 
 ## Comandos
-
+<p>
 composer update 
 composer install
 npm install
@@ -23,6 +23,7 @@ php artisan migrate:refresh //refrescar las tablas que ya estan creadas
 //compilar 
 npm run dev 
 npm run watch
+</p>
 
 
 
