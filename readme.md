@@ -10,6 +10,8 @@
 
 ## Comandos
 <p>
+    Instalación
+    
     $ composer update 
 
     $ composer install
