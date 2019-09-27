@@ -2,7 +2,14 @@
     
     <div class="card mb-3">
 
-        <div class="card-header">Publicado en {{ nota.created_at }}</div>
+        <div class="card-header">
+            <p>
+                Publicado en {{ nota.created_at }}
+                <strong v-if="!(nota.created_at == nota.updated_at)">
+                    Actualizado en {{ nota.updated_at }}
+                </strong> 
+            </p> 
+        </div>
 
         <div class="card-body">
 
@@ -59,19 +66,32 @@
             }
         },
         
-        nota() {
-            console.log('Component Nota.')
+        mounted() {
+            //console.log('Component Nota.')
         },
 
         methods: {
             onClickDelete() {
-                this.$emit('delete');
+                axios.delete(`/notas/${this.nota.id}`).then(() => {
+                    this.$emit('delete');
+                });
+                
             },
+
             onClickUpdate(value) {
                 this.editMode = value;
 
                 if(this.editMode == false){
-                    this.$emit('update', nota);
+                    const params = {
+                        descrip: this.nota.descrip
+                    };
+
+                    axios.put(`/notas/${this.nota.id}`, params)
+                        .then( (response) => {
+                            
+                            const nota = response.data;
+                            this.$emit('update', nota);
+                    });
                 }
             }
         }

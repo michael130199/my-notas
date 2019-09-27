@@ -13,7 +13,7 @@
 
             <notas-component 
                 v-for="(nota, index) in notas" 
-                :key="notas.id"
+                :key="nota.id"
                 :nota="nota"
                 @update="updateNota(index)"
                 @delete="deleteNota(index)">
@@ -32,24 +32,30 @@
     export default {
         data(){
             return {
-                notas: [{
-                    'id':0,
-                    'descrip':'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium ea voluptatem quae tenetur corporis ipsa cupiditate a facere repellat dignissimos. Magni, consectetur voluptates accusamus expedita nesciunt ut animi dolorem rem.',
-                    'created_at': '17/07/2018'
-                }]
+                notas: []
             }
         },
 
-        formNota() {
+        mounted() {
             console.log('Component Home');
+
+            axios.get('/notas').then( (response) => {
+                this.notas = response.data;
+            });
         },
+
         methods: {
             addNota(nota){
                 this.notas.push(nota);
+                this.notas.sort(function(a,b){
+                    return new Date(b.updated_at) - new Date(a.updated_at);
+                });
             },
+
             deleteNota(index) {
                 this.notas.splice(index, 1);
             },
+
             updateNota(index, nota) {
                 this.notas[index] = nota;
             }

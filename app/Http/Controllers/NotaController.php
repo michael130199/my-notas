@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\Nota;
+use App\Nota;
 use Illuminate\Http\Request;
 
 class NotaController extends Controller
@@ -14,16 +14,19 @@ class NotaController extends Controller
 
     public function index()
     {
-        return Nota::where('user_id', auth()->id())->get();
+        return Nota::where('user_id', auth()->id())->orderBy('updated_at', 'DESC')->get();
     }
 
     public function store(Request $request)
     {
+        //if (!$request)
+        
         $nota = new Nota();
         $nota->descrip = $request->descrip;
         $nota->user_id = auth()->id();
         $nota->save();
 
+        return $nota;
     }
 
     public function update(Request $request, $id)
@@ -31,6 +34,8 @@ class NotaController extends Controller
         $nota = Nota::find($id);
         $nota->descrip = $request->descrip;
         $nota->save();
+
+        return $nota;
     }
 
     public function destroy($id)

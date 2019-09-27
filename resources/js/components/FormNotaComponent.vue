@@ -48,13 +48,18 @@
         },
         methods:{
             newNota(){
-                let nota = {
-                    'id': 2,
-                    'descrip': this.descrip,
-                    'created_at': '11/11/2019'
+                const params  = {
+                    descrip: this.descrip
                 };
 
-                this.$emit('new', nota);
+                this.descrip;
+
+                axios.post('notas', params)
+                    .then((response) => {
+                        const nota = response.data;
+                        this.$emit('new', nota);
+                    });
+
             }
         }
     }

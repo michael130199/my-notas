@@ -1884,12 +1884,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newNota: function newNota() {
-      var nota = {
-        'id': 2,
-        'descrip': this.descrip,
-        'created_at': '11/11/2019'
+      var _this = this;
+
+      var params = {
+        descrip: this.descrip
       };
-      this.$emit('new', nota);
+      this.descrip;
+      axios.post('notas', params).then(function (response) {
+        var nota = response.data;
+
+        _this.$emit('new', nota);
+      });
     }
   }
 });
@@ -1938,19 +1943,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      notas: [{
-        'id': 0,
-        'descrip': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium ea voluptatem quae tenetur corporis ipsa cupiditate a facere repellat dignissimos. Magni, consectetur voluptates accusamus expedita nesciunt ut animi dolorem rem.',
-        'created_at': '17/07/2018'
-      }]
+      notas: []
     };
   },
-  formNota: function formNota() {
+  mounted: function mounted() {
+    var _this = this;
+
     console.log('Component Home');
+    axios.get('/notas').then(function (response) {
+      _this.notas = response.data;
+    });
   },
   methods: {
     addNota: function addNota(nota) {
       this.notas.push(nota);
+      this.notas.sort(function (a, b) {
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      });
     },
     deleteNota: function deleteNota(index) {
       this.notas.splice(index, 1);
@@ -2022,6 +2031,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['nota'],
   data: function data() {
@@ -2029,18 +2045,30 @@ __webpack_require__.r(__webpack_exports__);
       editMode: false
     };
   },
-  nota: function nota() {
-    console.log('Component Nota.');
+  mounted: function mounted() {//console.log('Component Nota.')
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit('delete');
+      var _this = this;
+
+      axios["delete"]("/notas/".concat(this.nota.id)).then(function () {
+        _this.$emit('delete');
+      });
     },
     onClickUpdate: function onClickUpdate(value) {
+      var _this2 = this;
+
       this.editMode = value;
 
       if (this.editMode == false) {
-        this.$emit('update', nota);
+        var params = {
+          descrip: this.nota.descrip
+        };
+        axios.put("/notas/".concat(this.nota.id), params).then(function (response) {
+          var nota = response.data;
+
+          _this2.$emit('update', nota);
+        });
       }
     }
   }
@@ -37424,7 +37452,7 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.notas, function(nota, index) {
           return _c("notas-component", {
-            key: _vm.notas.id,
+            key: nota.id,
             attrs: { nota: nota },
             on: {
               update: function($event) {
@@ -37465,7 +37493,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card mb-3" }, [
     _c("div", { staticClass: "card-header" }, [
-      _vm._v("Publicado en " + _vm._s(_vm.nota.created_at))
+      _c("p", [
+        _vm._v(
+          "\n            Publicado en " +
+            _vm._s(_vm.nota.created_at) +
+            "\n            "
+        ),
+        !(_vm.nota.created_at == _vm.nota.updated_at)
+          ? _c("strong", [
+              _vm._v(
+                "\n                Actualizado en " +
+                  _vm._s(_vm.nota.updated_at) +
+                  "\n            "
+              )
+            ])
+          : _vm._e()
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -49991,8 +50034,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/2/my-notas/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/2/my-notas/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! c:\Pro\xampp\htdocs\1-Practica\my-notas\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! c:\Pro\xampp\htdocs\1-Practica\my-notas\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
